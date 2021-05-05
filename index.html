@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +8,31 @@
   <link rel="stylesheet" href="style.css">
   <title>Text Editor</title>
 </head>
+
 <body>
+
+  <div class="header">
+    <h1>Text Editor v1.0</h1>
+  </div>
+
+  <div class="content">
+    <div class="editor">
+      <div class="editor-toolbar">
+        <button id="button-bold">
+          <img src="images/bold.svg" />
+        </button>
+        <button id="button-italic">
+          <img src="images/italic.svg" />
+        </button>
+        <button id="button-bullets">
+          <img src="images/bullets.svg" />
+        </button>
+      </div>
+      <div id="textbox-input" class="textbox-input" contenteditable></div>
+    </div>
+  </div>
 
 </body>
 <script src="index.js"></script>
+
 </html>
