@@ -22,13 +22,15 @@ const applyHandlers = buttons => {
   });
 };
 
-let buttons = getButtons();
-applyHandlers(buttons);
-
-// allows text indenting with Tab key
-document.addEventListener('keydown', e => {
+// TODO: code ability to leave textBox using Tab key for accessibility
+const insertTabIfEditing = e => {
   if (e.code == 'Tab' && document.activeElement == textBox) {
     e.preventDefault();
     execCommand('insertText', '\t');
   }
-});
+};
+
+document.addEventListener('keydown', insertTabIfEditing);
+
+let buttons = getButtons();
+applyHandlers(buttons);
