@@ -4,29 +4,26 @@ const execCommand = (command, arguments, showDefaultUI=false) => {
   document.execCommand(command, showDefaultUI, arguments);
 }
 
-const boldButton = {
-  el: document.getElementById('button-bold'),
-  style: 'bold'
+const getButtons = () => {
+  return [...document.getElementById('editor-toolbar').children].map(node => {
+    return {
+      el: node,
+      action: node.dataset.command
+    };
+  });
 };
 
-const italicButton = {
-  el: document.getElementById('button-italic'),
-  style: 'italic'
+const applyHandlers = buttons => {
+  buttons.forEach(button => {
+    if (button.el) {
+      button.el.onmousedown = e => e.preventDefault();
+      button.action && (button.el.onclick = () => execCommand(button.action));
+    }
+  });
 };
 
-const bulletsButton = {
-  el: document.getElementById('button-bullets'),
-  style: 'insertUnorderedList'
-};
-
-let buttons = [boldButton, italicButton, bulletsButton];
-
-buttons.forEach(button => {
-  if (button.el) {
-    button.el.onmousedown = e => e.preventDefault();
-    button.style && (button.el.onclick = () => execCommand(button.style));
-  }
-});
+let buttons = getButtons();
+applyHandlers(buttons);
 
 // allows text indenting with Tab key
 document.addEventListener('keydown', e => {
