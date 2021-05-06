@@ -1,5 +1,7 @@
-const applyStyle = style => {
-  document.execCommand(style);
+const textBox = document.getElementById('textbox-input');
+
+const execCommand = (command, arguments, showDefaultUI=false) => {
+  document.execCommand(command, showDefaultUI, arguments);
 }
 
 const boldButton = {
@@ -22,6 +24,14 @@ let buttons = [boldButton, italicButton, bulletsButton];
 buttons.forEach(button => {
   if (button.el) {
     button.el.onmousedown = e => e.preventDefault();
-    button.style && (button.el.onclick = () => applyStyle(button.style));
+    button.style && (button.el.onclick = () => execCommand(button.style));
+  }
+});
+
+// allows text indenting with Tab key
+document.addEventListener('keydown', e => {
+  if (e.code == 'Tab' && document.activeElement == textBox) {
+    e.preventDefault();
+    execCommand('insertText', '\t');
   }
 });
