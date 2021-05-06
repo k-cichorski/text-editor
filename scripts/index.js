@@ -30,7 +30,7 @@ const insertTabIfEditing = e => {
   }
 };
 
-const hideLoadingMask = () => {
+const removeLoadingMask = () => {
   const loadingMask = document.getElementById('loading-mask');
   loadingMask.classList.add('fadeOut');
   setTimeout(() => {
@@ -42,4 +42,4 @@ let buttons = getButtons();
 applyHandlers(buttons);
 
 document.addEventListener('keydown', insertTabIfEditing);
-window.onload = hideLoadingMask;
+window.onload = removeLoadingMask;
