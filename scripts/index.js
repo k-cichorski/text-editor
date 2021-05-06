@@ -31,7 +31,11 @@ const insertTabIfEditing = e => {
 };
 
 const hideLoadingMask = () => {
-  document.getElementById('loading-mask').classList.add('fadeOut');
+  const loadingMask = document.getElementById('loading-mask');
+  loadingMask.classList.add('fadeOut');
+  setTimeout(() => {
+    loadingMask.remove();
+  }, 400);
 }
 
 let buttons = getButtons();
