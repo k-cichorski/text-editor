@@ -1,0 +1,27 @@
+{
+  "name": "text-editor",
+  "version": "1.0.0",
+  "description": "A simple text editor.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k-cichorski/text-editor.git"
+  },
+  "keywords": [
+    "text",
+    "editor"
+  ],
+  "author": "Jakub Cichorski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/k-cichorski/text-editor/issues"
+  },
+  "homepage": "https://github.com/k-cichorski/text-editor#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
