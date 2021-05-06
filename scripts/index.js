@@ -30,7 +30,12 @@ const insertTabIfEditing = e => {
   }
 };
 
-document.addEventListener('keydown', insertTabIfEditing);
+const hideLoadingMask = () => {
+  document.getElementById('loading-mask').classList.add('fadeOut');
+}
 
 let buttons = getButtons();
 applyHandlers(buttons);
+
+document.addEventListener('keydown', insertTabIfEditing);
+window.onload = hideLoadingMask;
