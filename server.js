@@ -46,7 +46,6 @@ app.get('/api/v1/load', (req, res) => {
 
 app.get('/public/:directory/:fileName', (req, res) => {
   const {fileName, directory} = req.params;
-  console.log(directory);
   res.sendFile(path.join(__dirname, `public/${directory}/${fileName}`));
 });
 
