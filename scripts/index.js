@@ -28,9 +28,8 @@ const applyButtonHandlers = (buttons, handler, prevDefault=false) => {
   });
 };
 
-// TODO: code ability to leave textBox using Tab key for accessibility
 const handleKeyDown = e => {
-  if (e.code == 'Tab' && document.activeElement == textBox) {
+  if (e.code == 'Tab' && document.activeElement == textBox && !e.shiftKey) {
     e.preventDefault();
     document.execCommand('insertText', false, '\t');
   }
