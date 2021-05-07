@@ -1,7 +1,7 @@
 # Text Editor
 This is a simple text editor, which allows users to:
 - add bullet points
-- ****embolden**** and **italicize** text
+- ****embolden**** and *italicize* text
 - save to and load from file
 ## Installation
 ```bash
