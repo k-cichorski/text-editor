@@ -16,7 +16,7 @@ Default ****port**** on which the server runs is:
 ```bash
 const port = process.env.PORT || 3000;
 ```
-If that doesn't suit you, modify ****port**** variable in ****server.js****
+If that doesn't suit you, modify the ****port**** variable in ****server.js****
 ## Usage
 Go to project directory, run:
 ```bash
