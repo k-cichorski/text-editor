@@ -49,12 +49,13 @@ const removeLoadingMask = () => {
 };
 
 const adjustButtonPressed = () => {
+  if (document.activeElement != textBox) return
   const adjustButton = (button) => {
     const hasStyling = document.queryCommandState(button.action);
     if ((hasStyling && !button.pressed) || (!hasStyling && button.pressed)) {
       toggleButtonPressed(button);
     }
-  }
+  };
   buttons.forEach(adjustButton);
 }
 
