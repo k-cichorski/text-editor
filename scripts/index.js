@@ -19,7 +19,7 @@ const toggleButtonPressed = (button) => {
   button.el.classList.toggle('pressed');
 };
 
-const applyHandlers = buttons => {
+const applyButtonHandlers = buttons => {
   buttons.forEach(button => {
     if (button.el) {
       button.el.onmousedown = e => e.preventDefault();
@@ -33,10 +33,17 @@ const applyHandlers = buttons => {
 };
 
 // TODO: code ability to leave textBox using Tab key for accessibility
-const insertTabIfEditing = e => {
+const handleKeyDown = e => {
   if (e.code == 'Tab' && document.activeElement == textBox) {
     e.preventDefault();
     document.execCommand('insertText', false, '\t');
+  }
+  if (e.code == 'Backspace') {
+    /* 
+      Timeout necessary because document.queryCommandState() returns old state without it.
+      Not sure if 50ms isn't too low for older machines, but gives a very smooth feeling.
+    */
+    setTimeout(adjustButtonPressed, 50);
   }
 };
 
@@ -57,11 +64,11 @@ const adjustButtonPressed = () => {
     }
   };
   buttons.forEach(adjustButton);
-}
+};
 
 let buttons = getButtons();
-applyHandlers(buttons);
+applyButtonHandlers(buttons);
 
-document.addEventListener('keydown', insertTabIfEditing);
+document.onkeydown = e => handleKeyDown(e);
 document.onselectionchange = adjustButtonPressed;
 window.onload = removeLoadingMask;
