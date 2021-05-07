@@ -43,17 +43,31 @@
   <div class="content">
     <div class="editor">
       <div id="editor-toolbar" class="editor-toolbar">
-        <button id="button-bold" data-command="bold">
-          <img src="images/bold.svg" />
-        </button>
-        <button id="button-italic" data-command="italic">
-          <img src="images/italic.svg" />
-        </button>
-        <button id="button-bullets" data-command="insertUnorderedList">
-          <img src="images/bullets.svg" />
-        </button>
+        <div id="format-buttons" class="editor-buttons">
+          <button id="button-bold" data-command="bold">
+            <img src="images/bold.svg" />
+          </button>
+
+          <button id="button-italic" data-command="italic">
+            <img src="images/italic.svg" />
+          </button>
+
+          <button id="button-bullets" data-command="insertUnorderedList">
+            <img src="images/bullets.svg" />
+          </button>
+        </div>
+
+        <div id="file-buttons" class="editor-buttons">
+          <button id="button-save" data-command="save">
+            <img src="images/save.svg" />
+          </button>
+          <button id="button-save" data-command="load">
+            <img src="images/load.svg" />
+          </button>
+        </div>
       </div>
-      <div id="textbox-input" class="textbox-input" contenteditable></div>
+
+      <div id="textbox" class="textbox" contenteditable></div>
     </div>
   </div>
 

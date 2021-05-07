@@ -1,11 +1,11 @@
-const textBox = document.getElementById('textbox-input');
+const textBox = document.getElementById('textbox');
 
 const execCommand = (button, arguments=null, showDefaultUI=false) => {
   document.execCommand(button.action, showDefaultUI, arguments);
 };
 
-const getButtons = () => {
-  return [...document.getElementById('editor-toolbar').children].map(node => {
+const getButtons = (container) => {
+  return [...document.getElementById(container).children].map(node => {
     return {
       el: node,
       action: node.dataset.command,
@@ -19,15 +19,11 @@ const toggleButtonPressed = (button) => {
   button.el.classList.toggle('pressed');
 };
 
-const applyButtonHandlers = buttons => {
+const applyButtonHandlers = (buttons, handler, prevDefault=false) => {
   buttons.forEach(button => {
     if (button.el) {
-      button.el.onmousedown = e => e.preventDefault();
-      button.action && (button.el.onclick = () => {
-        toggleButtonPressed(button);
-        textBox.focus();
-        execCommand(button);
-      });
+      prevDefault && (button.el.onmousedown = e => e.preventDefault());
+      button.action && (button.el.onclick = () => handler(button));
     }
   });
 };
@@ -63,12 +59,59 @@ const adjustButtonPressed = () => {
       toggleButtonPressed(button);
     }
   };
-  buttons.forEach(adjustButton);
+  formatButtons.forEach(adjustButton);
 };
 
-let buttons = getButtons();
-applyButtonHandlers(buttons);
+// TODO: nicer dialog boxes
+const fileOperation = (button) => {
+  if (!confirm(`Are you sure you want to ${button.action} file?`)) return
+  let sendParams;
+  let handleResponse;
+  if (button.action == 'save') {
+    sendParams = {
+      method: 'POST',
+      body: JSON.stringify({
+        content: textBox.innerHTML
+      }),
+    };
+    handleResponse = (data) => alert(`File saved!`);
+    ;
+  } else if (button.action == 'load') {
+    sendParams = {
+      method: 'GET'
+    };
+    handleResponse = async (data) => {
+      data = await data.json();
+      textBox.innerHTML = JSON.parse(data.content);
+    };
+  }
+  fetch(`api/v1/${button.action}`, {
+    ...sendParams,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then((data) => {
+    if (data.ok) {
+      handleResponse(data);
+    } else {
+      console.log(data);
+      alert(`An error ocurred :( Message: ${data.statusText}`);
+    }
+  });
+};
 
+const formatButtonHandler = (button) => {
+  toggleButtonPressed(button);
+  textBox.focus();
+  execCommand(button);
+};
+
+let formatButtons = getButtons('format-buttons');
+let fileButtons = getButtons('file-buttons');
+
+// handlers
+applyButtonHandlers(formatButtons, formatButtonHandler, true);
+applyButtonHandlers(fileButtons, fileOperation);
 document.onkeydown = e => handleKeyDown(e);
 document.onselectionchange = adjustButtonPressed;
 window.onload = removeLoadingMask;
