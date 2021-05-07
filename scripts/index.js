@@ -90,11 +90,11 @@ const fileOperation = (button) => {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then((data) => {
+  }).then(async (data) => {
     if (data.ok) {
       handleResponse(data);
     } else {
-      console.log(data);
+      data = await data.json();
       alert(`An error ocurred :( Message: ${data.statusText}`);
     }
   });

@@ -27,9 +27,14 @@ app.post('/api/v1/save', (req, res) => {
 app.get('/api/v1/load', (req, res) => {
   fs.readFile('savedFile.json', 'utf8', (err, content) => {
     if (err) {
-      res.send({
-        ok: false,
-        statusText: err
+      let statusText;
+      if (err.errno == -4058) {
+        statusText = 'No file to read from!';
+      } else {
+        statusText = err;
+      }
+      res.status(500).send({
+        statusText
       });
     } else {
       res.send({
