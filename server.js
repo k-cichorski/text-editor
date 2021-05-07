@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.post('/api/v1/save', (req, res) => {
@@ -44,9 +44,10 @@ app.get('/api/v1/load', (req, res) => {
   });
 });
 
-app.get('/:directory/:fileName', (req, res) => {
+app.get('/public/:directory/:fileName', (req, res) => {
   const {fileName, directory} = req.params;
-  res.sendFile(path.join(__dirname, `/${directory}/${fileName}`));
+  console.log(directory);
+  res.sendFile(path.join(__dirname, `public/${directory}/${fileName}`));
 });
 
 app.listen(port, () => {
