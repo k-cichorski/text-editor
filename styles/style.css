@@ -64,3 +64,8 @@ body {
 li {
   margin-left: 0.8em;
 }
+
+.pressed {
+  background-color: rgba(239, 239, 239, 0.658);
+  transform: scale(0.9);
+}
