@@ -38,7 +38,7 @@ const handleKeyDown = e => {
       Timeout necessary because document.queryCommandState() returns old state without it.
       Not sure if 50ms isn't too low for older machines, but gives a very smooth feeling.
     */
-    setTimeout(adjustButtonPressed, 50);
+    setTimeout(() => adjustButtonPressed(formatButtons), 50);
   }
 };
 
@@ -50,15 +50,15 @@ const removeLoadingMask = () => {
   }, 400);
 };
 
-const adjustButtonPressed = () => {
+const adjustButtonPressed = (buttons) => {
   if (document.activeElement != textBox) return
   const adjustButton = (button) => {
     const hasStyling = document.queryCommandState(button.action);
-    if ((hasStyling && !button.pressed) || (!hasStyling && button.pressed)) {
+    if (hasStyling != button.pressed) {
       toggleButtonPressed(button);
     }
   };
-  formatButtons.forEach(adjustButton);
+  buttons.forEach(adjustButton);
 };
 
 // TODO: nicer dialog boxes
@@ -74,7 +74,6 @@ const fileOperation = (button) => {
       }),
     };
     handleResponse = (data) => alert(`File saved!`);
-    ;
   } else if (button.action == 'load') {
     sendParams = {
       method: 'GET'
@@ -112,5 +111,5 @@ let fileButtons = getButtons('file-buttons');
 applyButtonHandlers(formatButtons, formatButtonHandler, true);
 applyButtonHandlers(fileButtons, fileOperation);
 document.onkeydown = e => handleKeyDown(e);
-document.onselectionchange = adjustButtonPressed;
+document.onselectionchange = () => adjustButtonPressed(formatButtons);
 window.onload = removeLoadingMask;
